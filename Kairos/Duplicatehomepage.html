@@ -24,13 +24,18 @@
         <div class="container">
             <img src="" class="bird">
         </div>
-      <div class="column">
+        <div class="background">
+          <div class="column">
 
-        <div class="text-box">
-            <h1>K  a  i  r  o  s</h1>
-            <p>Fuelling the mind</p>
+            <div class="text-box">
+                <h1>K  a  i  r  o  s</h1>
+                <p>Fuelling the mind</p>
+            </div>
+
         </div>
+       
     </section>
+
     
     <section class="about"> 
 
@@ -208,6 +213,7 @@
         width: 30%;
         padding: 5px;
         margin-bottom: 30%;
+      
         }
     .header {
         min-height: 100vh;
@@ -218,23 +224,37 @@
         background-blend-mode: lighten;
         position: relative;
     }
+    .background {
+        min-height: 100vh;
+        width: 100%;
+        background-position: center;
+        background-size: cover;
+        background-blend-mode: lighten;
+        position: relative;
+        background-color:antiquewhite;
+    }
+
     .text-box {
-        width: 90%;
+        width: 100%;
         color: black;
         position: absolute;
         text-align: center;
         left: 6%;
     }
+
     .text-box h1 {
         font-size: 200px;
         font-family: "canvas-script", sans-serif;
         margin-top: 60px;
+        margin-right: 110px;
+        text-align: center;
     }
 
     .text-box p {
         font-size: 50px;
         font-family: "hey-eloise", sans-serif;
         margin-bottom: 200px;
+        margin-right: 110px;
     }
 
     .about {
