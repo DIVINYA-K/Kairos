@@ -30,6 +30,13 @@
     background-color: #ddd;
     color: black;
 }
+.News h1 {
+    font-size: 200px;
+    font-family: "canvas-script", sans-serif;
+    margin-top: 60px;
+    margin-left: 10px;
+    text-align: center;
+    }
 
 #logo {
     display: inline-block;
@@ -38,6 +45,7 @@
     width: auto; 
     border-radius: 50%; 
 }
+
 
 .footer {
 text-align: left;
