@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="News.css">
-    <link rel="stylesheet" href="News.js">
     <link rel="stylesheet" href="https://use.typekit.net/ayn0vpn.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Make Your Own</title>
@@ -31,15 +30,47 @@
         <section>
           <div class="News">
             <h1>Make Your Own</h1>
+            <p>Make your own Bento Box, and customise with meals of your choice! Answer the questions below to make your own bento!</p>
         </div>
         </section>
 
         <section>
-          <p>Make your own Bento Box, and customise with things you prefer!</p>
-          <h1 id="quizQuestion"></h1>  
-          <div id="question"></div>
-          <div id="choices"></div>
+          <h1 id="quizQuestion"></h1> 
+          <div id="quizContainer">
+            <div id="question"></div>
+            <div id="choices"></div>
+          </div> 
+          <div id="userChoicesContainer"></div>
         </section>
+
+        <script type="module">
+          // Import the functions you need from the SDKs you need
+          import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+          import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+          // TODO: Add SDKs for Firebase products that you want to use
+          // https://firebase.google.com/docs/web/setup#available-libraries
+        
+          // Your web app's Firebase configuration
+          // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+          const firebaseConfig = {
+            apiKey: "AIzaSyDmjB-MmsdkHzhuJVW3f7UYwv3PGm_bXZ0",
+            authDomain: "kairos-c63ee.firebaseapp.com",
+            databaseURL: "https://kairos-c63ee-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "kairos-c63ee",
+            storageBucket: "kairos-c63ee.appspot.com",
+            messagingSenderId: "943638192791",
+            appId: "1:943638192791:web:92e0cecda0d877f4637fd2",
+            measurementId: "G-NM10YNH7B5"
+          };
+        
+          // Initialize Firebase
+          const app = initializeApp(firebaseConfig);
+          const analytics = getAnalytics(app);
+          
+
+        import {getDatabase, set, get, update, remove, ref, child}
+        from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js"
+        </script>
         
 
       <section class="footer">
@@ -49,6 +80,7 @@
           <p>FAQ</p>
         </footer>
       </section>
+     
       <script src="News.js"></script>
 </body>
 

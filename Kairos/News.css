@@ -38,6 +38,13 @@
     text-align: center;
     }
 
+.News p {
+        font-size: 30px;
+        font-family:  "Moonblossom", sans-serif;
+        text-align: center;
+        margin-top:5px;
+    }
+
 #logo {
     display: inline-block;
     margin: 0;
@@ -46,6 +53,27 @@
     border-radius: 50%; 
 }
 
+#quizQuestion {
+    font-size: 48px;
+    font-family:  "Moonblossom", sans-serif;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    
+}
+
+#choices button {
+    font-size: 30px;
+    font-family:  "Moonblossom", sans-serif;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+#quizContainer {
+    text-align: center;
+}
 
 .footer {
 text-align: left;

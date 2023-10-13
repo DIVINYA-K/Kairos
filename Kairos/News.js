@@ -1,10 +1,11 @@
         var question = document.querySelector('#question')
         var choicesElement = document.querySelector('#choices')
+        var userChoices = [];
         var score = 0
         var quizQuestion = document.getElementById("quizQuestion"); 
         var questionData = [
             {
-                question: "Dietary Requirements",
+                question: "Dietary Requirements?",
                 choices: [
                     {
                         text: "Vegan",
@@ -22,6 +23,29 @@
                 ]
                 
             }, 
+            {
+                question: "Choose a Snack",
+                choices: [ 
+                    {
+                        text: "Popcorn"
+                    },
+                    {
+                        text: "Carrot Sticks"
+                    },
+                    {
+                        text: "Nuts"
+                    },
+                    {
+                        text: "Yougurt"
+                    },
+                    {
+                        text: "Pea Crisps"
+                    },
+                    {
+                        text: "Energy Bars"
+                    },
+                ]
+            },
             {
                 question: "Choose a main meal",
                 choices: [
@@ -135,29 +159,6 @@
                         text: "Pepperoni GF"
                     },
                 ]
-            },
-            {
-                question: "Choose a Snack",
-                choices: [ 
-                    {
-                        text: "Popcorn"
-                    },
-                    {
-                        text: "Carrot Sticks"
-                    },
-                    {
-                        text: "Nuts"
-                    },
-                    {
-                        text: "Yougurt"
-                    },
-                    {
-                        text: "Pea Crisps"
-                    },
-                    {
-                        text: "Energy Bars"
-                    },
-                ]
             }
 
         ]
@@ -174,6 +175,7 @@
                 choicesElement.appendChild(choiceButton);
                 choiceButton.addEventListener ('click',function() {
                     var clickedChoice = choice.text;
+                    userChoices.push(clickedChoice);
                     choiceQuestion(clickedChoice);
                     questionState++;
                     if (questionState < questionData.length) {
@@ -193,10 +195,44 @@
                 var choiceButton = document.createElement('button');
                 choiceButton.textContent = choice.text;
                 choicesElement.appendChild(choiceButton);
-                questionState ++;
              
             });
         }
+
+        function showChoices3() {
+            var questionState2 = 1
+            choicesElement.innerHTML = "";
+            questionData2[questionState2].choices.forEach(choice => {
+                var choiceButton = document.createElement('button');
+                choiceButton.textContent = choice.text;
+                choicesElement.appendChild(choiceButton);
+             
+            });
+        }
+
+        function showChoices4() {
+            var questionState3 = 2
+            choicesElement.innerHTML = "";
+            questionData2[questionState3].choices.forEach(choice => {
+                var choiceButton = document.createElement('button');
+                choiceButton.textContent = choice.text;
+                choicesElement.appendChild(choiceButton);
+             
+            });
+        }
+
+        
+        function showChoices5() {
+            var questionState4 = 3
+            choicesElement.innerHTML = "";
+            questionData2[questionState4].choices.forEach(choice => {
+                var choiceButton = document.createElement('button');
+                choiceButton.textContent = choice.text;
+                choicesElement.appendChild(choiceButton);
+             
+            });
+        }
+        
 
 
         function choiceQuestion(clickedChoice) {
@@ -206,27 +242,55 @@
                     var questionState = 0
 
                     quizQuestion.innerHTML = questionData2 [questionState]['question'];
-                    showChoices2();
+                    showChoices2(); 
                     
                 }
-                else {
-                    if (clickedChoice==="Wrap") {
+                else if (clickedChoice==="Wrap") {
                         var questionState = 1
 
                     quizQuestion.innerHTML = questionData2 [questionState]['question'];
-                    showChoices2();
-                    }
+                    showChoices3();
                 }
-                  {
-                    if (clickedChoice==="Salad") {
+                  
+                    else if (clickedChoice==="Salad") {
                         var questionState = 2
 
                     quizQuestion.innerHTML = questionData2 [questionState]['question'];
-                    showChoices2();
+                    showChoices4();
                     }
-                }
+                
+                    else if (clickedChoice==="Pizza") {
+                        var questionState = 3
 
+                    quizQuestion.innerHTML = questionData2 [questionState]['question'];
+                    showChoices5();
+                    }
+
+                    else {
+                        displayUserChoices();
+                        saveUserChoicesToFirebase();
+                      }
 
         }
+
+        function displayUserChoices(){
+            var userChoicesContainer = document.getElementById("userChoicesContainer");
+            userChoicesContainer.innerHTML = "<h2>Your Choices:</h2>";
+            userChoices.forEach(choice => {
+                var choiceElement = document.createElement("p");
+                choiceElement.textContent = choice;
+                userChoicesContainer.appendChild(choiceElement);
+            });
+        }
+
+        function saveUserChoicesToFirebase() {
+            var userChoicesRef = database.ref("userChoices");
+
+            userChoicesRef.push ({
+                choices: userChoices
+            });
+         }
+
+        
     
     
