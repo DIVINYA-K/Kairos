@@ -14,7 +14,7 @@
     <section class="header">
         <div class="topnav">
             <ul>
-                <li><a class="#Duplicatehomepage" href="file:///C:/Users/DKhil/OneDrive/Desktop/Kairos/Kairos/Duplicatehomepage.html#home">Home</a></li>
+                <li><a class="#Duplicatehomepage" href="file:///C:/Users/DKhil/OneDrive/Desktop/Kairos/Kairos/Index.html">Home</a></li>
                 <li><a href="C:/Users/DKhil/OneDrive/Desktop/Kairos/Kairos/News.html">MYO</a></li> 
                 <li><a href="#"><img id="logo" src="cuteowl.gif"></a></li>
                 <li><a href="file:///C:/Users/DKhil/OneDrive/Desktop/Kairos/Kairos/About.html">About</a></li>
@@ -41,37 +41,28 @@
             <div id="choices"></div>
           </div> 
           <div id="userChoicesContainer"></div>
+          <div id="quantityInputContainer"></div>
         </section>
 
-        <script type="module">
-          // Import the functions you need from the SDKs you need
-          import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-          import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
-          // TODO: Add SDKs for Firebase products that you want to use
-          // https://firebase.google.com/docs/web/setup#available-libraries
-        
-          // Your web app's Firebase configuration
-          // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-          const firebaseConfig = {
-            apiKey: "AIzaSyDmjB-MmsdkHzhuJVW3f7UYwv3PGm_bXZ0",
-            authDomain: "kairos-c63ee.firebaseapp.com",
-            databaseURL: "https://kairos-c63ee-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "kairos-c63ee",
-            storageBucket: "kairos-c63ee.appspot.com",
-            messagingSenderId: "943638192791",
-            appId: "1:943638192791:web:92e0cecda0d877f4637fd2",
-            measurementId: "G-NM10YNH7B5"
-          };
-        
-          // Initialize Firebase
-          const app = initializeApp(firebaseConfig);
-          const analytics = getAnalytics(app);
+        <section>
+          <div> 
+          <h1>Enter ID</h1>
+          <input type="number" id="ID">
+          </div>
+          <div>
+            <h1>Enter Name</h1>
+            <input type="text" id="name">
+          </div>
           
+          <button id="clickButton" > CLICK </button>
 
-        import {getDatabase, set, get, update, remove, ref, child}
-        from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js"
-        </script>
-        
+          <div>
+            <h1>Find User by ID</h1>
+            <input type="text" id="findID">
+            <button id="findButton">Find User</button>
+        </div>
+        <div id="output"></div>
+        </section>
 
       <section class="footer">
         <footer> 
@@ -82,6 +73,69 @@
       </section>
      
       <script src="News.js"></script>
+
 </body>
+<script type="module" >
+ 
+
+
+ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js';
+ import { getFirestore, query, collection, setDoc, doc, addDoc, getDocs, where } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-lite.js';
+
+
+  const firebaseConfig = {
+      apiKey: "AIzaSyBZ2srrvhRP6t0MTOCnG5M2Ne1LdvB7K18",
+      authDomain: "kairos-data-a2bd6.firebaseapp.com",
+      projectId: "kairos-data-a2bd6",
+      storageBucket: "kairos-data-a2bd6.appspot.com",
+      messagingSenderId: "199943965259",
+      appId: "1:199943965259:web:eee9ea126f8f4d6af59bce",
+      measurementId: "G-HFMWCBTMEE"
+  }
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+const clickButton = document.getElementById("clickButton")
+
+clickButton.addEventListener("click", function() {
+          const userID = document.getElementById("ID").value
+          const name = document.getElementById("name").value
+          const choices = "User Choices: " + userChoices.join(", ");
+          console.log(userID + name + "User Choices:", userChoices);
+
+          const docRef = addDoc(collection(db, "users"), {
+              ID:userID,
+              Name:name,
+              choices:choices
+              
+          })
+      })
+
+      const findButton = document.getElementById("findButton");
+
+findButton.addEventListener("click", async function() {
+    const collectionName = "users"; 
+    const fieldName = "ID";
+    const queryValue = document.getElementById("findID").value;
+    const outputElement = document.getElementById("output");
+
+
+    const q = query(collection(db, collectionName), where(fieldName, "==", queryValue));
+
+    try {
+        const querySnapshot = await getDocs(q);
+        
+        querySnapshot.forEach((doc) => {
+          outputElement.innerHTML = doc.id + " => " + JSON.stringify(doc.data());
+            // Do something with the found user data, for example, display it on the page
+        });
+    } catch (error) {
+        console.error("Error fetching documents: ", error);
+    }
+    
+});
+
+
+</script>
 
 </html>
