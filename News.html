@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="News.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ayn0vpn.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Make Your Own</title>
+</head>
+<body>
+    
+    <section class="header">
+        <div class="topnav">
+            <ul>
+                <li><a class="#Duplicatehomepage" href="file:///C:/Users/DKhil/OneDrive/Desktop/Kairos/Kairos/Index.html">Home</a></li>
+                <li><a href="C:/Users/DKhil/OneDrive/Desktop/Kairos/Kairos/News.html">MYO</a></li> 
+                <li><a href="#"><img id="logo" src="cuteowl.gif"></a></li>
+                <li><a href="file:///C:/Users/DKhil/OneDrive/Desktop/Kairos/Kairos/About.html">About</a></li>
+                <li><a href="file:///C:/Users/DKhil/OneDrive/Desktop/Kairos/Kairos/Order.html">Order</a></li>
+            </ul>
+        </div>
+        
+        <div class="container">
+            <img src="" class="bird">
+        </div>
+      <div class="column">
+      <section>
+        <section>
+          <div class="News">
+            <h1>Make Your Own</h1>
+            <p>Make your own Bento Box, and customise with meals of your choice! Answer the questions below to make your own bento!</p>
+        </div>
+        </section>
+
+        <section>
+          <h1 id="quizQuestion"></h1> 
+          <div id="quizContainer">
+            <div id="question"></div>
+            <div id="choices"></div>
+          </div> 
+          <div id="userChoicesContainer"></div>
+          <div id="quantityInputContainer"></div>
+        </section>
+
+        <section id="userInputSection" style="display: none;">
+          <div>
+            <h1>If you want to save the lunchbox you have made, Enter an ID number and your Name. Then to find it, just type in the ID number you put in! </h1>
+          </div>
+          <div>
+            <h1>Enter ID</h1>
+            <input type="number" id="ID">
+          </div>
+          <div>
+            <h1>Enter Name</h1>
+            <input type="text" id="name">
+          </div>
+          <button id="clickButton" onclick="button()">ENTER</button>
+          <div>
+        </section>
+
+        <section id="findUserInput">
+          <h1>Already Done the quiz and want to find what you picked? Just enter the ID you made below!</h1>
+          <h2>Find User by ID</h2>
+            <input type="text" id="findID">
+            <button id="findButton">Find User</button>
+          </div>
+          <div id="output"></div>
+        </section>
+        
+
+      <section class="footer">
+        <footer> 
+          <p>email: karumalil.p@maristcollege.school.nz</p>
+          <p>website developer: Divinya Karumalil</p>
+          <p>FAQ</p>
+        </footer>
+      </section>
+     
+      <script src="News.js"></script>
+
+</body>
+<script type="module" >
+ 
+
+
+ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js';
+ import { getFirestore, query, collection, setDoc, doc, addDoc, getDocs, where } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-lite.js';
+
+
+  const firebaseConfig = {
+      apiKey: "AIzaSyBZ2srrvhRP6t0MTOCnG5M2Ne1LdvB7K18",
+      authDomain: "kairos-data-a2bd6.firebaseapp.com",
+      projectId: "kairos-data-a2bd6",
+      storageBucket: "kairos-data-a2bd6.appspot.com",
+      messagingSenderId: "199943965259",
+      appId: "1:199943965259:web:eee9ea126f8f4d6af59bce",
+      measurementId: "G-HFMWCBTMEE"
+  }
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+const clickButton = document.getElementById("clickButton")
+
+clickButton.addEventListener("click", function() {
+          const userID = document.getElementById("ID").value
+          const name = document.getElementById("name").value
+          const choices = "User Choices: " + userChoices.join(", ");
+          console.log(userID + name + "User Choices:", userChoices);
+          const clickButton = document.getElementById("clickButton");
+
+  // Check if the ID field is not empty
+  if (userID.trim() !== "") {
+  
+    alert("Data added!");
+  } else {
+    // Alertng the user to enter something in the ID field
+    alert("Please enter ID before clicking.");
+  }
+
+          const docRef = addDoc(collection(db, "users"), {
+              ID:userID,
+              Name:name,
+              choices:choices
+              
+          })
+      })
+
+      const findButton = document.getElementById("findButton");
+
+findButton.addEventListener("click", async function() {
+    const collectionName = "users"; 
+    const fieldName = "ID";
+    const queryValue = document.getElementById("findID").value;
+    const outputElement = document.getElementById("output");
+    
+    const q = query(collection(db, collectionName), where(fieldName, "==", queryValue));
+
+    try {
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+        // Create a new div element to hold the data
+        const resultDiv = document.createElement('div');
+
+        // Extract data from the document
+        const { ID, choices, Name } = doc.data();
+
+        // Set the inner HTML of the div with the document data on separate lines
+        resultDiv.innerHTML = `
+            <strong>ID:</strong> ${ID}<br>
+            <strong>Choices:</strong> ${choices}<br>
+            <strong>Name:</strong> ${Name}
+        `;
+
+        // Append the div to the output element
+        outputElement.appendChild(resultDiv);
+
+        // Do something with the found user data, for example, display it on the page
+    });
+} catch (error) {
+    console.error("Error fetching documents: ", error);
+}
+
+    
+});
+
+
+
+</script>
+
+</html>
