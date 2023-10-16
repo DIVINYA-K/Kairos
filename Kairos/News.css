@@ -70,6 +70,7 @@
     margin-right: 10px;
     margin-bottom: 30px;
     margin-top: 20px;
+    cursor: pointer;
 }
 
 #quizContainer {
@@ -96,3 +97,25 @@ font-family:  "Moonblossom", sans-serif;
     font-size: 24px;
     text-align: center;
 }
+
+#userInputSection {
+    text-align: center;
+    font-family: "Moonblossom", sans-serif;
+    margin-bottom: 20px;
+  }
+
+  #userInputSection h1 {
+    font-size: xx-large;
+  }
+
+  #findUserInput{
+    text-align: center;
+    font-family: "Moonblossom", sans-serif;
+    margin-bottom: 20px;
+  }
+
+  #output {
+    text-align: center;
+    font-family: "Moonblossom", sans-serif;
+  }
+  

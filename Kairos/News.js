@@ -424,6 +424,7 @@
                 choiceElement.textContent = choice;
                 //Attaching the choiceElement (the <p>) to the userChoicesContainer
                 userChoicesContainer.appendChild(choiceElement);
+                document.getElementById("userInputSection").style.display = "block";
             });
         }
         

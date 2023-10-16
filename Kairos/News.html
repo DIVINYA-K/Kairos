@@ -44,25 +44,31 @@
           <div id="quantityInputContainer"></div>
         </section>
 
-        <section>
-          <div> 
-          <h1>Enter ID</h1>
-          <input type="number" id="ID">
+        <section id="userInputSection" style="display: none;">
+          <div>
+            <h1>If you want to save the lunchbox you have made, Enter an ID number and your Name. Then to find it, just type in the ID number you put in! </h1>
+          </div>
+          <div>
+            <h1>Enter ID</h1>
+            <input type="number" id="ID">
           </div>
           <div>
             <h1>Enter Name</h1>
             <input type="text" id="name">
           </div>
-          
-          <button id="clickButton" > CLICK </button>
-
+          <button id="clickButton" onclick="button()">ENTER</button>
           <div>
-            <h1>Find User by ID</h1>
+        </section>
+
+        <section id="findUserInput">
+          <h1>Already Done the quiz and want to find what you picked? Just enter the ID you made below!</h1>
+          <h2>Find User by ID</h2>
             <input type="text" id="findID">
             <button id="findButton">Find User</button>
-        </div>
-        <div id="output"></div>
+          </div>
+          <div id="output"></div>
         </section>
+        
 
       <section class="footer">
         <footer> 
@@ -102,6 +108,16 @@ clickButton.addEventListener("click", function() {
           const name = document.getElementById("name").value
           const choices = "User Choices: " + userChoices.join(", ");
           console.log(userID + name + "User Choices:", userChoices);
+          const clickButton = document.getElementById("clickButton");
+
+  // Check if the ID field is not empty
+  if (userID.trim() !== "") {
+  
+    alert("Data added!");
+  } else {
+    // Alertng the user to enter something in the ID field
+    alert("Please enter ID before clicking.");
+  }
 
           const docRef = addDoc(collection(db, "users"), {
               ID:userID,
@@ -118,22 +134,38 @@ findButton.addEventListener("click", async function() {
     const fieldName = "ID";
     const queryValue = document.getElementById("findID").value;
     const outputElement = document.getElementById("output");
-
-
+    
     const q = query(collection(db, collectionName), where(fieldName, "==", queryValue));
 
     try {
-        const querySnapshot = await getDocs(q);
-        
-        querySnapshot.forEach((doc) => {
-          outputElement.innerHTML = doc.id + " => " + JSON.stringify(doc.data());
-            // Do something with the found user data, for example, display it on the page
-        });
-    } catch (error) {
-        console.error("Error fetching documents: ", error);
-    }
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+        // Create a new div element to hold the data
+        const resultDiv = document.createElement('div');
+
+        // Extract data from the document
+        const { ID, choices, Name } = doc.data();
+
+        // Set the inner HTML of the div with the document data on separate lines
+        resultDiv.innerHTML = `
+            <strong>ID:</strong> ${ID}<br>
+            <strong>Choices:</strong> ${choices}<br>
+            <strong>Name:</strong> ${Name}
+        `;
+
+        // Append the div to the output element
+        outputElement.appendChild(resultDiv);
+
+        // Do something with the found user data, for example, display it on the page
+    });
+} catch (error) {
+    console.error("Error fetching documents: ", error);
+}
+
     
 });
+
 
 
 </script>
