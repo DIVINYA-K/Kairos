@@ -56,7 +56,7 @@
             <h1>Enter Name</h1>
             <input type="text" id="name">
           </div>
-          <button id="clickButton" onclick="button()">ENTER</button>
+          <button id="clickButton">ENTER</button>
           <div>
         </section>
 
@@ -84,11 +84,11 @@
 <script type="module" >
  
 
-
+//Importing functions from firebase 
  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js';
  import { getFirestore, query, collection, setDoc, doc, addDoc, getDocs, where } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-lite.js';
 
-
+//My firebase configuration to link my code with my database
   const firebaseConfig = {
       apiKey: "AIzaSyBZ2srrvhRP6t0MTOCnG5M2Ne1LdvB7K18",
       authDomain: "kairos-data-a2bd6.firebaseapp.com",
@@ -98,28 +98,33 @@
       appId: "1:199943965259:web:eee9ea126f8f4d6af59bce",
       measurementId: "G-HFMWCBTMEE"
   }
+  //This is initialising the app with the firebase configuration give above
   const app = initializeApp(firebaseConfig);
+  //This is getting my database from Firestore, db is short for database
   const db = getFirestore(app);
 
+  //Declaring a constant getting the click button by the Id click button
 const clickButton = document.getElementById("clickButton")
-
+//Adding an event listener to the button. Event listener is to 'listen' to know if the button has been clicked for example.
 clickButton.addEventListener("click", function() {
+  //This is getting the value of the user ID and name by Id
           const userID = document.getElementById("ID").value
           const name = document.getElementById("name").value
+          //This is saying that the constant choices is the string User Choices with the combined elements from userChoices. The join method is taking all the elements in the userChoices and comnbining them as one string the comma separates them.
           const choices = "User Choices: " + userChoices.join(", ");
-          console.log(userID + name + "User Choices:", userChoices);
           const clickButton = document.getElementById("clickButton");
 
-  // Check if the ID field is not empty
-  if (userID.trim() !== "") {
-  
+  //Checking if the userID is not equal to an empty string
+  if (userID !== "") {
+  //Alerting the user that the Data has been added if it is not an empty string
     alert("Data added!");
   } else {
-    // Alertng the user to enter something in the ID field
+    // Alerting the user to enter something in the ID field if it is empty
     alert("Please enter ID before clicking.");
   }
-
+  //This is declaring a variable called docRef. This is selecting the collection called users from my database (db) and adding a new document in that collection.
           const docRef = addDoc(collection(db, "users"), {
+            //These are the names of what is being added to the database
               ID:userID,
               Name:name,
               choices:choices
@@ -128,39 +133,47 @@ clickButton.addEventListener("click", function() {
       })
 
       const findButton = document.getElementById("findButton");
-
+//
 findButton.addEventListener("click", async function() {
+  //Declaring Consts 'users' is the collection in my firestore database
     const collectionName = "users"; 
     const fieldName = "ID";
     const queryValue = document.getElementById("findID").value;
     const outputElement = document.getElementById("output");
     
+    //This is retrieving a collection which is called users, as declared in the constant above, from the database, it should be retrieved from the value of the Id, which fieldName is declared as.
     const q = query(collection(db, collectionName), where(fieldName, "==", queryValue));
 
+    //A try block is used for code that might have an error in it
     try {
+      //This is getting the documents from firestore
     const querySnapshot = await getDocs(q);
 
+    //This is doing something for each document. querySnapshot is something that represent the result of the query
     querySnapshot.forEach((doc) => {
-        // Create a new div element to hold the data
+       
         const resultDiv = document.createElement('div');
 
-        // Extract data from the document
+       //This is getting specific properties called ID, choices, Name from the document data.
         const { ID, choices, Name } = doc.data();
 
-        // Set the inner HTML of the div with the document data on separate lines
+        //Showing what is in the result div in the HTML. The $ and curly brackets allow you to have strings with multiple lines
         resultDiv.innerHTML = `
             <strong>ID:</strong> ${ID}<br>
             <strong>Choices:</strong> ${choices}<br>
             <strong>Name:</strong> ${Name}
         `;
 
-        // Append the div to the output element
+     //This is adding the resultDiv that I created before to the outputElement
         outputElement.appendChild(resultDiv);
 
-        // Do something with the found user data, for example, display it on the page
+        
     });
+
+    //The Catch block is used to handle errors  
 } catch (error) {
-    console.error("Error fetching documents: ", error);
+  //This is alerting if there is an error
+    alert("Error fetching documents: ");
 }
 
     
