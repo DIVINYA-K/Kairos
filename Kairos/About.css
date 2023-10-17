@@ -101,9 +101,15 @@ text-align: center;
 }
 
 .text-container p {
-    font-size: 25px; 
+    font-size: 22px; 
     line-height: 1.5; 
     color: #333; 
+    font-family: "Moonblossom", sans-serif ;
+}
+
+.text-container h1 {
+    font-size: 60px; 
+    font-family: "canvas-script", sans-serif;
 }
 
 .main-content {
